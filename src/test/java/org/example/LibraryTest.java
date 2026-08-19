@@ -4,14 +4,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LibraryTest {
+
     private Library library;
+
     private final Book book1 = new Book("Harry Potter and the Philosopher's Stone", "J.K. Rowling");
-    private final Book book2 = new Book("The Lord of the Rings", "J.R.R. Tolkien");
 
     @BeforeEach
     void setUp() {
@@ -31,21 +32,39 @@ public class LibraryTest {
     @DisplayName("Add already existing book to library")
     void addBook_shouldThrowException_whenBookAlreadyExists() {
         library.addBook(book1);
-        assertThrows(IllegalArgumentException.class, () -> library.addBook(book1));
+
+        IllegalArgumentException ex = assertThrows(
+                IllegalArgumentException.class,
+                () -> library.addBook(book1)
+        );
+
+        assertEquals("Book already exists: " + book1, ex.getMessage());
     }
 
     @Test
-    @DisplayName("Get list of books")
-    void getBooks_shouldReturnImmutableList() {
+    @DisplayName("Get set of books")
+    void getBooks_shouldReturnImmutableSet() {
+        Book book2 =
+                new Book("The Lord of the Rings", "J.R.R. Tolkien");
+
         library.addBook(book1);
-        List<Book> books = library.getBooks();
-        assertThrows(UnsupportedOperationException.class, () -> books.add(book2));
+
+        Set<Book> books = library.getBooks();
+
+        assertThrows(
+                UnsupportedOperationException.class,
+                () -> books.add(book2)
+        );
     }
 
     @Test
     @DisplayName("Add null book to library")
     void addBook_shouldThrowException_whenBookIsNull() {
-        NullPointerException ex = assertThrows(NullPointerException.class, () -> library.addBook(null));
+        NullPointerException ex = assertThrows(
+                NullPointerException.class,
+                () -> library.addBook(null)
+        );
+
         assertEquals("Book cannot be null", ex.getMessage());
     }
 
@@ -83,6 +102,8 @@ public class LibraryTest {
     @Test
     @DisplayName("Get book count after adding books")
     void getBookCount_shouldReturnCorrectCount_afterAddingBooks() {
+        Book book2 = new Book("The Lord of the Rings", "J.R.R. Tolkien");
+
         library.addBook(book1);
         library.addBook(book2);
 
@@ -91,8 +112,8 @@ public class LibraryTest {
 
     @Test
     @DisplayName("Get books when library is empty")
-    void getBooks_shouldReturnEmptyList_whenLibraryIsEmpty() {
-        List<Book> books = library.getBooks();
+    void getBooks_shouldReturnEmptySet_whenLibraryIsEmpty() {
+        Set<Book> books = library.getBooks();
 
         assertTrue(books.isEmpty());
     }

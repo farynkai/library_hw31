@@ -1,14 +1,26 @@
 package org.example;
 
-import java.util.List;
+import java.util.Set;
 
 public class Main {
+
     public static void main(String[] args) {
         Library library = new Library();
 
-        Book book1 = new Book("Harry Potter and the Philosopher's Stone", "J.K. Rowling");
-        Book book2 = new Book("The Lord of the Rings", "J.R.R. Tolkien");
-        Book book3 = new Book("The Hunger Games", "Suzanne Collins");
+        Book book1 = new Book(
+                "Harry Potter and the Philosopher's Stone",
+                "J.K. Rowling"
+        );
+
+        Book book2 = new Book(
+                "The Lord of the Rings",
+                "J.R.R. Tolkien"
+        );
+
+        Book book3 = new Book(
+                "The Hunger Games",
+                "Suzanne Collins"
+        );
 
         library.addBook(book1);
         library.addBook(book2);
@@ -36,7 +48,7 @@ public class Main {
         }
     }
 
-    private static void printBooks(List<Book> books) {
+    private static void printBooks(Set<Book> books) {
         for (Book book : books) {
             System.out.println(" - " + book);
         }

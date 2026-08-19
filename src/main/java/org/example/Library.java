@@ -1,29 +1,31 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Library {
-    private final List<Book> books = new ArrayList<>();
+
+    private final Set<Book> books = new HashSet<>();
 
     public void addBook(Book book) {
         Objects.requireNonNull(book, "Book cannot be null");
-        if (books.contains(book)) {
+
+        if (!books.add(book)) {
             throw new IllegalArgumentException("Book already exists: " + book);
         }
-        books.add(book);
     }
 
     public boolean removeBook(Book book) {
         if (book == null) {
             return false;
         }
+
         return books.remove(book);
     }
 
-    public List<Book> getBooks() {
-        return List.copyOf(books);
+    public Set<Book> getBooks() {
+        return Set.copyOf(books);
     }
 
     public int getBookCount() {
