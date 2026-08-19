@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class Library {
 
-    private final Set<Book> books = new HashSet<>();
+    private final HashSet<Book> books = new HashSet<>();
 
     public void addBook(Book book) {
         Objects.requireNonNull(book, "Book cannot be null");
